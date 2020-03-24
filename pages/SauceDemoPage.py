@@ -11,7 +11,7 @@ class SauceDemoPage:
     def GoTo(self):
         self.browser.get("https://www.saucedemo.com/")
 
-    def HomePageTitle(self):
+    def Title(self):
         return self.browser.title
 
     def Login(self):

@@ -1,27 +1,23 @@
-from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
 import pytest
+from selenium.common.exceptions import WebDriverException
+
+from utils.Driver import Driver
 
 """
 This file contains the fixture which will be run before the tests.
 
-Webdriver_Manager is used to ensure the latest version of the driver executables are being used.
-
 """
 
-@pytest.fixture
+@pytest.fixture()
 def browser():
+    factory = Driver()
+    driver = factory.GetDriver()
 
-    # The following options block will start up Chrome without notifications enabled that could interfere with our test.
+    if driver is not None:
+        print("New driver instance created!")
+    else:
+        raise WebDriverException("Never created!")
 
-    chrome_options = webdriver.ChromeOptions()
-    prefs = {"profile.default_content_setting_values.notifications": 2}
-    chrome_options.add_experimental_option("prefs", prefs)
+    yield driver
 
-    b = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-
-    # Implicit waits are not advised. But including one here for demo purposes
-
-    b.implicitly_wait(10)
-    yield b
-    b.quit()
+    driver.quit()
