@@ -19,15 +19,18 @@ def test_FirstInstance(browser):
     assert TITLE in HomePage.Title()
 
 def test_Second_Instance(browser):
+
+    # Test is the same as previous but with a negative assertion.
+
     NewHomePage = SauceDemoPage(browser)
 
-    TITLE = "Swag Labs"
+    TITLE = "Incorrect Title"
 
     NewHomePage.GoTo()
 
     NewHomePage.Login()
 
-    assert TITLE in NewHomePage.Title()
+    assert TITLE not in NewHomePage.Title()
 
 
 
